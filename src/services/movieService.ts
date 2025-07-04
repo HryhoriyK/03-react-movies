@@ -1,0 +1,35 @@
+// src/services/movieService.ts
+
+import axios, { AxiosResponse } from "axios";
+import { Movie } from "../types/movie";
+
+const BASE_URL = "https://api.themoviedb.org/3";
+const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
+
+export async function fetchMovies(query: string): Promise<{ results: Movie[] }> {
+  if (!query.trim()) {
+    throw new Error("Zadej hledaný výraz.");
+  }
+
+  try {
+    const response: AxiosResponse<{ results: Movie[] }> = await axios.get(
+      `${BASE_URL}/search/movie`,
+      {
+        params: {
+          query,
+          language: "cs-CZ",
+          include_adult: false,
+        },
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.status_message || "Chyba při načítání filmů."
+    );
+  }
+}
