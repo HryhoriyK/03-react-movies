@@ -1,4 +1,4 @@
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import SearchBar from "../SearchBar/SearchBar";
 import { useState } from "react";
 import type { Movie } from "../../types/movie";
@@ -21,7 +21,12 @@ export default function App() {
         try {
             setError(false);
             setIsLoading(true);
+            setMovies([]);
             const data = await fetchMovies(searchTopic);
+
+            if (data.results.length === 0) {
+                toast("No movies found for your request.")
+            }
             setMovies(data.results);
         } catch (error) {
             console.error(error);
