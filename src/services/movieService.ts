@@ -1,7 +1,7 @@
 // src/services/movieService.ts
 
-import axios, { AxiosResponse } from "axios";
-import { Movie } from "../types/movie";
+import axios from "axios";
+import type { Movie } from "../types/movie";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
@@ -12,7 +12,7 @@ export async function fetchMovies(query: string): Promise<{ results: Movie[] }> 
   }
 
   try {
-    const response: AxiosResponse<{ results: Movie[] }> = await axios.get(
+    const { data } = await axios.get<{ results: Movie[] }>(
       `${BASE_URL}/search/movie`,
       {
         params: {
@@ -26,7 +26,7 @@ export async function fetchMovies(query: string): Promise<{ results: Movie[] }> 
       }
     );
 
-    return response.data;
+    return data;
   } catch (error: any) {
     throw new Error(
       error.response?.data?.status_message || "Chyba při načítání filmů."
