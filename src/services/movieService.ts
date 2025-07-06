@@ -8,7 +8,7 @@ const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 export async function fetchMovies(query: string): Promise<{ results: Movie[] }> {
   if (!query.trim()) {
-    throw new Error("Zadej hledaný výraz.");
+    throw new Error();
   }
 
   try {
@@ -29,11 +29,9 @@ export async function fetchMovies(query: string): Promise<{ results: Movie[] }> 
     return data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data?.status_message || "Chyba při načítání filmů."
-      );
+      throw new Error();
     } else {
-      throw new Error("Neočekávaná chyba při načítání.");
+      throw new Error();
     }
   }
 }
