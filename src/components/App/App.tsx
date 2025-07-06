@@ -28,8 +28,7 @@ export default function App() {
                 toast("No movies found for your request.")
             }
             setMovies(data.results);
-        } catch (error) {
-            console.error(error);
+        } catch {
             setError(true);
         } finally {
             setIsLoading(false);

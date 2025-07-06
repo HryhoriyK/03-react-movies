@@ -17,7 +17,7 @@ export async function fetchMovies(query: string): Promise<{ results: Movie[] }> 
       {
         params: {
           query,
-          language: "cs-CZ",
+          language: "en",
           include_adult: false,
         },
         headers: {
@@ -27,9 +27,13 @@ export async function fetchMovies(query: string): Promise<{ results: Movie[] }> 
     );
 
     return data;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.status_message || "Chyba při načítání filmů."
-    );
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.status_message || "Chyba při načítání filmů."
+      );
+    } else {
+      throw new Error("Neočekávaná chyba při načítání.");
+    }
   }
 }
