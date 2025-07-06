@@ -6,7 +6,7 @@ import { fetchMovies } from "../../services/movieService";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import MovieModal from "../MovieModal/MovieModal";
 import Loader from "../Loader/Loader";
-import ErrorMessage from "../ErrorMessage/ErroerMessage";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 
 
@@ -50,7 +50,7 @@ export default function App() {
             {isLoading && <Loader />}
             {error && <ErrorMessage />}
             {!isLoading && !error && movies.length > 0 && (
-            <MovieGrid items={movies} onMovieClick={handleMovieClick} />
+            <MovieGrid movies={movies} onSelect={handleMovieClick} />
             )}
             {selectedMovie && (
                 <MovieModal movie={selectedMovie} onClose={handleCloseModal} />

@@ -10,6 +10,12 @@ interface MovieModalProps {
 
 export default function MovieModal({ onClose, movie }: MovieModalProps) {
 
+    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      };
+
     useEffect(() => {
 
         const handleKeydown = (event: KeyboardEvent) => {
@@ -25,7 +31,7 @@ export default function MovieModal({ onClose, movie }: MovieModalProps) {
     }, [onClose]);
     
     return createPortal(
-        <div className={css.backdrop} role="dialog" aria-modal="true">
+        <div className={css.backdrop} onClick={handleBackdropClick} role="dialog" aria-modal="true">
             <div className={css.modal}>
                 <button onClick={onClose} className={css.closeButton} aria-label="Close modal">
                     &times;
